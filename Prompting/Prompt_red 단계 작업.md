@@ -1,5 +1,5 @@
 # RGR 프로젝트 README.md 파일
-_Exported on 12/16/2025 at 16:18:39 GMT+9 from Cursor (2.2.20)_
+_Exported on 12/16/2025 at 16:31:01 GMT+9 from Cursor (2.2.20)_
 
 ---
 
