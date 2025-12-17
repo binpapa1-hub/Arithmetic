@@ -37,7 +37,7 @@ class Arithmetic:
         return a / b
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     print("=== 사칙연산 테스트 ===")
     print(f"덧셈: 1 + 10 = {Arithmetic.add(1, 10)}")
     print(f"덧셈: -1 + (-10) = {Arithmetic.add(-1, -10)}")

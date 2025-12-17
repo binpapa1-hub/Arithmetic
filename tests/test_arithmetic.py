@@ -59,3 +59,8 @@ class TestArithmetic:
         with pytest.raises(ArithmeticError):
             Arithmetic.divide(0, 0)
 
+    def test_division_quotient_by_zero_exception(self):
+        """예외 처리 테스트: divide_quotient(1, 0) → ArithmeticException"""
+        with pytest.raises(ArithmeticError):
+            Arithmetic.divide_quotient(1, 0)
+
