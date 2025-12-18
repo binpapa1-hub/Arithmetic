@@ -1,61 +1,47 @@
-# RGR 프로젝트 README.md 파일
-_Exported on 12/16/2025 at 16:31:01 GMT+9 from Cursor (2.2.20)_
+# Test cases report analysis
+_Exported on 12/17/2025 at 15:04:03 GMT+9 from Cursor (2.2.20)_
 
 ---
 
 **User**
 
-테스트 케이스	프로젝트명	인사관리 앱 시스템 구축
-	대상 시스템	정산 시스템
-단계	단위 테스트	작성자	홍길동	승인자	박문수	문서 상태	최초 작성
-작성일	2020-09-01	버전	v1.0	테스트 범위	공통 모듈	테스트 조직	개발팀
-테스트 ID	TC-CMM-001("Common Module" or "Core Mathematical Module")
-
-TC-AO-001 ("Arithmetic Operations")		테스트 일자	2020-09-01
-테스트 목적	사칙연산 정확도 테스트
-테스트 기능	+ 기능 점검
-입력값	1,10 / 0,1/ 0,0/ 0,-1/-1,-10
-테스트단계	테스트 케이스	예상값	중요도	성공 /실패	비고
-	1+10	11	중요	성공	
-	0+1	1	중요	성공	
-	0 / 0	예외 발생		중요	성공	
-	-1 + (-10)	-11	보통	성공	
-	5 - 2	3	중요	성공	
-	-5 * -3	15	보통	성공	
-	5 / 2	2	중요	성공	
-	5 ÷ 2 (quotient)	2.5	보통	성공	
-	0 * 10	0	낮음	성공	
-	-10 / 2	-5	중요	성공	
-					
-	추가된 테스트 사례
-1. 예외 처리 확인:
-• 0 / 0 → ArithmeticException 예외 발생 확인.
-다양한 조합:
-• 양수, 음수, 0을 포함한 다양한 테스트 케이스를 추가하여 연산의 정확도와 범위를 검증.
-몫 계산 테스트 (quotient):
-• 정수 나눗셈 대신 소수점을 포함한 결과를 테스트.
-이 테스트 케이스는 기능의 정확성과 예외 처리를 포함하여 클래스의 모든 기능을 검증합니다.
-테스트환경	파이썬
-파이참
-운영 체제: 윈도우 10
-
-전제 조건	프로그램은 오류 없이 성공적으로 컴파일되어야 합니다.
-모든 종속성을 올바르게 설치하고 구성해야 합니다.
-성공 /실패 기준	성공: 모든 테스트 사례가 예상한 결과를 생성합니다.
-실패: 테스트 케이스가 예상한 결과를 생성하지 않습니다.
-특별하게 필요한 절차	테스트 결과를 기록하고 이에 따라 테스트 사례 문서를 업데이트합니다.
-즉각적인 해결을 위해 모든 실패를 개발팀에 전달하세요.
-
-
-위 내용으로 RED-GREEN-REFACTOR 방식으로 프로젝트를 진행하려고 하는데, 우선 README.md 파일을 만들어줘
+@report/Test_Cases_Report.md 이파일을 분석해서 구현해야할 기능을 기능/비기능 항목으로 구분해서 목록을 알려줘
 
 ---
 
 **Cursor**
 
+## 기능/비기능 요구사항 분석
 
-README.md 파일을 작성 중입니다.
+### 기능적 요구사항 (Functional Requirements)
 
+| # | 함수 | 설명 | 입출력 예시 |
+|---|------|------|-------------|
+| 1 | `add(a, b)` | 두 수의 덧셈 | `add(1, 10)` → `11` |
+| 2 | `subtract(a, b)` | 두 수의 뺄셈 | `subtract(5, 2)` → `3` |
+| 3 | `multiply(a, b)` | 두 수의 곱셈 | `multiply(-5, -3)` → `15` |
+| 4 | `divide(a, b)` | 정수 나눗셈 | `divide(5, 2)` → `2` |
+| 5 | `divide_quotient(a, b)` | 소수점 나눗셈 | `divide_quotient(5, 2)` → `2.5` |
+
+### 비기능적 요구사항 (Non-Functional Requirements)
+
+| # | 항목 | 설명 |
+|---|------|------|
+| 1 | **예외 처리** | 0으로 나눌 때 `ArithmeticError` 발생 |
+| 2 | **음수 처리** | 음수 입력값 정상 처리 (덧셈, 곱셈, 나눗셈) |
+| 3 | **0 처리** | 0이 포함된 연산 정상 처리 (`0 + 1`, `0 * 10`) |
+| 4 | **테스트 커버리지** | 100% 코드 커버리지 유지 |
+| 5 | **환경 호환성** | Python 3.10.11, pytest 9.0.2 환경에서 동작 |
+
+---
+
+**User**
+
+구현 우선순위를 readme.md 파일에 green 단계에서 해야할 목록을 추가해줘
+
+---
+
+**Cursor**
 
 ```markdown
 # Arithmetic Operations - TDD 프로젝트
@@ -110,13 +96,28 @@ README.md 파일을 작성 중입니다.
 
 ## TDD 프로세스 (RED-GREEN-REFACTOR)
 
-### 1. RED 단계
+### 1. RED 단계 --> 진행중 ing~~!!
 - 실패하는 테스트 케이스를 먼저 작성합니다.
 - 모든 테스트 케이스가 실패하는 것을 확인합니다.
 
 ### 2. GREEN 단계
 - 테스트를 통과하는 최소한의 코드를 작성합니다.
 - 모든 테스트 케이스가 성공하는 것을 확인합니다.
+
+#### 구현 우선순위
+
+| 우선순위 | 함수 | 구현 내용 | 중요도 |
+|---------|------|----------|--------|
+| 1 | `add(a, b)` | `return a + b` | 중요 |
+| 2 | `subtract(a, b)` | `return a - b` | 중요 |
+| 3 | `multiply(a, b)` | `return a * b` | 보통 |
+| 4 | `divide(a, b)` | 정수 나눗셈 + 0 예외 처리 | 중요 |
+| 5 | `divide_quotient(a, b)` | 소수점 나눗셈 + 0 예외 처리 | 보통 |
+
+#### 비기능 요구사항
+- [ ] 0으로 나눌 때 `ArithmeticError` 발생
+- [ ] 음수 입력값 정상 처리
+- [ ] 테스트 커버리지 100% 유지
 
 ### 3. REFACTOR 단계
 - 코드의 품질을 개선합니다.
@@ -192,138 +193,107 @@ Arithmetic/
 - 정수 나눗셈과 소수점을 포함한 몫 계산을 모두 테스트합니다.
 - 예외 처리(0으로 나누기)를 반드시 포함합니다.
 
+
 ```
 
+README.md에 GREEN 단계 구현 목록을 추가했습니다:
 
-README.md 파일을 생성했습니다. 포함 내용:
+**구현 우선순위:**
+1. `add(a, b)` - 덧셈 (중요)
+2. `subtract(a, b)` - 뺄셈 (중요)
+3. `multiply(a, b)` - 곱셈 (보통)
+4. `divide(a, b)` - 정수 나눗셈 + 예외 처리 (중요)
+5. `divide_quotient(a, b)` - 소수점 나눗셈 + 예외 처리 (보통)
 
-- 프로젝트 개요 및 정보
-- 테스트 케이스 목록 (기본 연산 및 예외 처리)
-- RED-GREEN-REFACTOR TDD 프로세스 설명
-- 설치 및 실행 방법
-- 성공/실패 기준
-- 프로젝트 구조
-
-다음 단계로 테스트 코드와 구현 코드를 작성할 수 있습니다. 계속 진행할까요?
+**비기능 요구사항 체크리스트도 추가:**
+- 0으로 나눌 때 ArithmeticError 발생
+- 음수 입력값 정상 처리
+- 테스트 커버리지 100% 유지
 
 ---
 
 **User**
 
-@https://github.com/binpapa1-hub/Arithmetic.git에 프로젝트를 업로드해 줘
+@README.md 내용중 @README.md (61-69) 을 최소단위로 구현하려고 하는데 먼저 시나리오를 작성해서 보여주고 승인 받은 후 구현해줘
 
 ---
 
 **Cursor**
 
+## GREEN 단계 구현 시나리오
 
-Git 저장소 상태 확인 중. 이후 원격 저장소를 추가하고 푸시하겠습니다.
+### 구현 순서 (최소 단위)
 
+| 순서 | 함수 | 구현 코드 | 테스트 통과 예상 |
+|-----|------|----------|----------------|
+| 1 | `add(a, b)` | `return a + b` | TC-ADD-001~003 |
+| 2 | `subtract(a, b)` | `return a - b` | TC-SUB-001 |
+| 3 | `multiply(a, b)` | `return a * b` | TC-MUL-001~002 |
+| 4 | `divide(a, b)` | `if b == 0: raise ArithmeticError`<br>`return a // b` | TC-DIV-001, 003, TC-EXC-001 |
+| 5 | `divide_quotient(a, b)` | `if b == 0: raise ArithmeticError`<br>`return a / b` | TC-DIV-002 |
 
+### 구현 계획
 
-PowerShell에서는 `&&` 대신 `;`를 사용합니다. 다시 시도합니다.
+```python
+class Arithmetic:
+    @staticmethod
+    def add(a, b):
+        return a + b
 
+    @staticmethod
+    def subtract(a, b):
+        return a - b
 
+    @staticmethod
+    def multiply(a, b):
+        return a * b
 
-Git 저장소가 없습니다. 초기화하고 파일을 추가한 뒤 원격 저장소에 푸시하겠습니다.
+    @staticmethod
+    def divide(a, b):
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a // b
 
-
-
-파일을 스테이징하고 커밋한 뒤 원격 저장소에 푸시합니다.
-
-
-```ignore
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
-venv/
-ENV/
-env/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
+    @staticmethod
+    def divide_quotient(a, b):
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a / b
 ```
 
-
-원격 저장소를 추가하고 푸시합니다.
-
-
-
-프로젝트를 GitHub에 업로드했습니다.
-
-다음 작업을 완료했습니다:
-1. Git 저장소 초기화
-2. `.gitignore` 파일 생성 (Python 프로젝트용)
-3. 파일 스테이징 및 커밋
-4. 원격 저장소 추가 (`https://github.com/binpapa1-hub/Arithmetic.git`)
-5. `main` 브랜치로 푸시
-
-프로젝트는 다음 주소에서 확인할 수 있습니다:
-**https://github.com/binpapa1-hub/Arithmetic.git**
-
-현재 업로드된 파일:
-- `README.md` - 프로젝트 문서
-- `.gitignore` - Git 무시 파일 목록
-
-다음 단계로 테스트 코드와 구현 코드를 추가할 수 있습니다. 계속 진행할까요?
+### 예상 결과
+- 총 10개 테스트 모두 통과 (RED → GREEN)
+- 코드 커버리지 100% 유지
 
 ---
 
-**User**
+**이 시나리오로 진행할까요?**
 
-main 브랜치에서 RED 브랜치를 생성해줘
+```python
+class Arithmetic:
+    @staticmethod
+    def add(a, b):
+        return a + b
 
----
+    @staticmethod
+    def subtract(a, b):
+        return a - b
 
-**Cursor**
+    @staticmethod
+    def multiply(a, b):
+        return a * b
 
+    @staticmethod
+    def divide(a, b):
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a // b
 
-main 브랜치에서 RED 브랜치를 생성하고 전환합니다.
-
-
-
-RED 브랜치를 생성하고 전환했습니다.
-
-현재 RED 브랜치에서 작업 중입니다. RED 단계(실패하는 테스트 작성)를 진행할 수 있습니다.
-
-원격 저장소에도 푸시하려면 다음 명령을 실행하세요:
-```bash
-git push -u origin RED
-```
-
-지금 푸시할까요, 아니면 로컬에서 먼저 작업하시겠어요?
-
-```shellscript
-git push -u origin RED
+    @staticmethod
+    def divide_quotient(a, b):
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a / b
 ```
 
 ---
@@ -336,77 +306,283 @@ git push -u origin RED
 
 **Cursor**
 
-
-원격 저장소에 RED 브랜치를 푸시합니다.
-
-
-
-RED 브랜치를 원격 저장소에 푸시했습니다.
-
-현재 상태:
-- 로컬과 원격 모두 RED 브랜치에서 작업 중
-- RED 브랜치는 `origin/RED`를 추적하도록 설정됨
-
-RED 단계(실패하는 테스트 작성)를 진행할 수 있습니다. 테스트 코드 작성부터 시작할까요?
-
----
-
-**User**
-
-실패하는 테스트를 진행하기 위한 순서를 알려주고 승인을 받아서 작업할수 있도록 해줘.
-
----
-
-**Cursor**
+```python
+"""
+사칙연산 모듈
+TC-CMM-001 / TC-AO-001
+"""
 
 
-RED 단계(실패하는 테스트 작성) 작업 순서입니다.
+class Arithmetic:
+    """사칙연산을 수행하는 클래스"""
+    
+    @staticmethod
+    def add(a, b):
+        """두 수를 더합니다"""
+        return a + b
+    
+    @staticmethod
+    def subtract(a, b):
+        """두 수를 뺍니다"""
+        return a - b
+    
+    @staticmethod
+    def multiply(a, b):
+        """두 수를 곱합니다"""
+        return a * b
+    
+    @staticmethod
+    def divide(a, b):
+        """두 수를 나눕니다 (정수 나눗셈)"""
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a // b
+    
+    @staticmethod
+    def divide_quotient(a, b):
+        """두 수를 나눕니다 (몫, 소수점 포함)"""
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a / b
 
-## RED 단계 작업 순서
-
-### 1. 프로젝트 구조 생성
-- `src/` 디렉토리 생성 (구현 코드용)
-- `tests/` 디렉토리 생성 (테스트 코드용)
-- `requirements.txt` 생성 (필요한 경우)
-
-### 2. 테스트 파일 작성 (`tests/test_arithmetic.py`)
-- 테스트 케이스 문서의 모든 테스트 케이스를 포함
-- 아직 구현되지 않은 함수를 테스트하므로 실패 예상
-- 포함할 테스트:
-  - 덧셈: 1+10, 0+1, -1+(-10)
-  - 뺄셈: 5-2
-  - 곱셈: -5*(-3), 0*10
-  - 나눗셈: 5/2, 5÷2 (몫), -10/2
-  - 예외 처리: 0/0 → ArithmeticException
-
-### 3. 테스트 실행 및 실패 확인
-- pytest 또는 unittest로 테스트 실행
-- 모든 테스트가 실패하는지 확인 (RED 단계 완료)
-
-### 4. 커밋 및 푸시
-- RED 브랜치에 커밋
-- 원격 저장소에 푸시
-
-이 순서로 진행할까요? 승인해 주시면 작업을 시작하겠습니다.
-
----
-
-**User**
-
-1,2번 단계 내용만 진행해줘
-
----
-
-**Cursor**
-
-
-1, 2번 단계 진행: 프로젝트 구조 생성과 테스트 파일 작성.
-
-
-```pip-requirements
-pytest>=7.0.0
 
 ```
+
+✅ **GREEN 단계 완료!**
+
+모든 10개 테스트가 통과했습니다:
+
+| 함수 | 테스트 | 결과 |
+|------|--------|------|
+| `add` | 3개 | ✅ PASSED |
+| `subtract` | 1개 | ✅ PASSED |
+| `multiply` | 2개 | ✅ PASSED |
+| `divide` | 2개 | ✅ PASSED |
+| `divide_quotient` | 1개 | ✅ PASSED |
+| 예외 처리 | 1개 | ✅ PASSED |
+
+**RED → GREEN 전환 성공!**
+
+---
+
+**User**
+
+첨부와 같이 실행 했는데, 아무런 것도 안나오는데, 실행 결과 만들수 있을까?
+
+---
+
+**Cursor**
+
+`src/arithmetic.py`에 실행 가능한 메인 코드를 추가하겠습니다.
+
+```python
+"""
+사칙연산 모듈
+TC-CMM-001 / TC-AO-001
+"""
+
+
+class Arithmetic:
+    """사칙연산을 수행하는 클래스"""
+    
+    @staticmethod
+    def add(a, b):
+        """두 수를 더합니다"""
+        return a + b
+    
+    @staticmethod
+    def subtract(a, b):
+        """두 수를 뺍니다"""
+        return a - b
+    
+    @staticmethod
+    def multiply(a, b):
+        """두 수를 곱합니다"""
+        return a * b
+    
+    @staticmethod
+    def divide(a, b):
+        """두 수를 나눕니다 (정수 나눗셈)"""
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a // b
+    
+    @staticmethod
+    def divide_quotient(a, b):
+        """두 수를 나눕니다 (몫, 소수점 포함)"""
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a / b
+
+
+if __name__ == "__main__":
+    print("=== 사칙연산 테스트 ===")
+    print(f"덧셈: 1 + 10 = {Arithmetic.add(1, 10)}")
+    print(f"덧셈: -1 + (-10) = {Arithmetic.add(-1, -10)}")
+    print(f"뺄셈: 5 - 2 = {Arithmetic.subtract(5, 2)}")
+    print(f"곱셈: -5 * -3 = {Arithmetic.multiply(-5, -3)}")
+    print(f"곱셈: 0 * 10 = {Arithmetic.multiply(0, 10)}")
+    print(f"나눗셈(정수): 5 // 2 = {Arithmetic.divide(5, 2)}")
+    print(f"나눗셈(소수): 5 / 2 = {Arithmetic.divide_quotient(5, 2)}")
+    print(f"나눗셈: -10 / 2 = {Arithmetic.divide(-10, 2)}")
+
+```
+
+이제 다시 실행해보세요:
+
+```bash
+python src\arithmetic.py
+```
+
+실행하면 다음과 같은 결과가 출력됩니다:
+
+```
+=== 사칙연산 테스트 ===
+덧셈: 1 + 10 = 11
+덧셈: -1 + (-10) = -11
+뺄셈: 5 - 2 = 3
+곱셈: -5 * -3 = 15
+곱셈: 0 * 10 = 0
+나눗셈(정수): 5 // 2 = 2
+나눗셈(소수): 5 / 2 = 2.5
+나눗셈: -10 / 2 = -5
+```
+
+```shellscript
+python src\arithmetic.py
+```
+
+```plaintext
+=== 사칙연산 테스트 ===
+덧셈: 1 + 10 = 11
+덧셈: -1 + (-10) = -11
+뺄셈: 5 - 2 = 3
+곱셈: -5 * -3 = 15
+곱셈: 0 * 10 = 0
+나눗셈(정수): 5 // 2 = 2
+나눗셈(소수): 5 / 2 = 2.5
+나눗셈: -10 / 2 = -5
+```
+
+---
+
+**User**
+
+@README.md 내용중 @README.md (71-74) 을 최소단위로 구현하라고 하는데 먼저 시나리오를 작성해서 보여주고 승인 받은후 구현해줘
+
+---
+
+**Cursor**
+
+## 비기능 요구사항 구현 시나리오
+
+### 현재 상태 분석
+
+| 요구사항 | 현재 상태 | 비고 |
+|---------|----------|------|
+| 0으로 나눌 때 `ArithmeticError` 발생 | ✅ 이미 구현됨 | `divide`, `divide_quotient`에 적용 |
+| 음수 입력값 정상 처리 | ✅ 이미 구현됨 | 테스트 통과 확인됨 |
+| 테스트 커버리지 100% 유지 | ⏳ 확인 필요 | pytest-cov로 검증 |
+
+### 구현 계획
+
+**추가 구현 불필요** - 이미 GREEN 단계에서 모두 구현 완료
+
+### 검증 시나리오
+
+```bash
+# 1. 테스트 커버리지 확인
+pytest --cov=src --cov-report=term-missing tests/test_arithmetic.py
+
+# 2. 예외 처리 확인 (수동 테스트)
+python -c "from src.arithmetic import Arithmetic; Arithmetic.divide(1, 0)"
+```
+
+### 예상 결과
+- 커버리지 100% 확인
+- `ArithmeticError: Cannot divide by zero` 발생 확인
+
+### README 업데이트
+- 체크박스를 ✅ 완료 상태로 변경
+
+---
+
+**이 시나리오로 검증 및 README 업데이트를 진행할까요?**
+
+```shellscript
+# 1. 테스트 커버리지 확인
+pytest --cov=src --cov-report=term-missing tests/test_arithmetic.py
+
+# 2. 예외 처리 확인 (수동 테스트)
+python -c "from src.arithmetic import Arithmetic; Arithmetic.divide(1, 0)"
+```
+
+---
+
+**User**
+
+네
+
+---
+
+**Cursor**
+
+커버리지가 67%로 나옵니다. `if __name__ == "__main__":` 부분이 테스트에서 실행되지 않아서입니다. 이 부분은 실행 코드이므로 커버리지 제외 처리하겠습니다.
+
+```python
+"""
+사칙연산 모듈
+TC-CMM-001 / TC-AO-001
+"""
+
+
+class Arithmetic:
+    """사칙연산을 수행하는 클래스"""
+    
+    @staticmethod
+    def add(a, b):
+        """두 수를 더합니다"""
+        return a + b
+    
+    @staticmethod
+    def subtract(a, b):
+        """두 수를 뺍니다"""
+        return a - b
+    
+    @staticmethod
+    def multiply(a, b):
+        """두 수를 곱합니다"""
+        return a * b
+    
+    @staticmethod
+    def divide(a, b):
+        """두 수를 나눕니다 (정수 나눗셈)"""
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a // b
+    
+    @staticmethod
+    def divide_quotient(a, b):
+        """두 수를 나눕니다 (몫, 소수점 포함)"""
+        if b == 0:
+            raise ArithmeticError("Cannot divide by zero")
+        return a / b
+
+
+if __name__ == "__main__":  # pragma: no cover
+    print("=== 사칙연산 테스트 ===")
+    print(f"덧셈: 1 + 10 = {Arithmetic.add(1, 10)}")
+    print(f"덧셈: -1 + (-10) = {Arithmetic.add(-1, -10)}")
+    print(f"뺄셈: 5 - 2 = {Arithmetic.subtract(5, 2)}")
+    print(f"곱셈: -5 * -3 = {Arithmetic.multiply(-5, -3)}")
+    print(f"곱셈: 0 * 10 = {Arithmetic.multiply(0, 10)}")
+    print(f"나눗셈(정수): 5 // 2 = {Arithmetic.divide(5, 2)}")
+    print(f"나눗셈(소수): 5 / 2 = {Arithmetic.divide_quotient(5, 2)}")
+    print(f"나눗셈: -10 / 2 = {Arithmetic.divide(-10, 2)}")
+
+```
+
+95%입니다. line 36이 누락되었네요 - `divide_quotient`의 0 예외 처리입니다. 테스트에서 `divide_quotient(x, 0)` 케이스가 없습니다. 테스트를 추가하겠습니다.
 
 ```python
 """
@@ -470,595 +646,23 @@ class TestArithmetic:
         with pytest.raises(ArithmeticError):
             Arithmetic.divide(0, 0)
 
-```
+    def test_division_quotient_by_zero_exception(self):
+        """예외 처리 테스트: divide_quotient(1, 0) → ArithmeticException"""
+        with pytest.raises(ArithmeticError):
+            Arithmetic.divide_quotient(1, 0)
 
-```python
-# Arithmetic module
-
-```
-
-```python
-"""
-사칙연산 모듈
-TC-CMM-001 / TC-AO-001
-"""
-
-
-class Arithmetic:
-    """사칙연산을 수행하는 클래스"""
-    
-    @staticmethod
-    def add(a, b):
-        """두 수를 더합니다"""
-        pass
-    
-    @staticmethod
-    def subtract(a, b):
-        """두 수를 뺍니다"""
-        pass
-    
-    @staticmethod
-    def multiply(a, b):
-        """두 수를 곱합니다"""
-        pass
-    
-    @staticmethod
-    def divide(a, b):
-        """두 수를 나눕니다 (정수 나눗셈)"""
-        pass
-    
-    @staticmethod
-    def divide_quotient(a, b):
-        """두 수를 나눕니다 (몫, 소수점 포함)"""
-        pass
 
 ```
 
-```python
-# Tests module
-
-```
-
-
-1, 2번 단계를 완료했습니다.
-
-## 생성된 파일 구조
-
-```
-Arithmetic/
-├── src/
-│   ├── __init__.py
-│   └── arithmetic.py (구현되지 않은 빈 메서드)
-├── tests/
-│   ├── __init__.py
-│   └── test_arithmetic.py (모든 테스트 케이스 포함)
-├── requirements.txt
-└── README.md
-```
-
-## 작성된 테스트 케이스
-
-`tests/test_arithmetic.py`에 다음 테스트를 포함했습니다:
-- 덧셈: 1+10, 0+1, -1+(-10)
-- 뺄셈: 5-2
-- 곱셈: -5*(-3), 0*10
-- 나눗셈: 5/2 (정수), 5÷2 (몫 2.5), -10/2
-- 예외 처리: 0/0 → ArithmeticError
-
-현재 `src/arithmetic.py`의 메서드는 `pass`만 있어 모든 테스트가 실패합니다 (RED 단계).
-
-다음 단계로 진행할까요?
-
-```plaintext
-Arithmetic/
-├── src/
-│   ├── __init__.py
-│   └── arithmetic.py (구현되지 않은 빈 메서드)
-├── tests/
-│   ├── __init__.py
-│   └── test_arithmetic.py (모든 테스트 케이스 포함)
-├── requirements.txt
-└── README.md
-```
-
----
-
-**User**
-
-test_addition_1_plus_10 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_addition_1_plus_10` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.add()`가 `None`을 반환해 `assert None == 11` 오류가 발생했습니다. RED 단계에 맞는 결과입니다.
-
-변경사항을 커밋합니다.
-
-
-
-작업 완료.
-
-## 테스트 결과
-- `test_addition_1_plus_10` 테스트 실행
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == 11` - `Arithmetic.add()`가 아직 구현되지 않아 `None` 반환
-
-## 커밋 완료
-- 커밋 메시지: "RED: Add failing test for addition (1+10) and project structure"
-- 커밋된 파일:
-  - `requirements.txt`
-  - `src/__init__.py`
-  - `src/arithmetic.py`
-  - `tests/__init__.py`
-  - `tests/test_arithmetic.py`
-
-RED 브랜치에 커밋되었습니다. 원격 저장소에 푸시할까요?
-
----
-
-**User**
-
-네
-
----
-
-**Cursor**
-
-
-원격 저장소에 푸시합니다.
-
-
-
-원격에 로컬에 없는 변경이 있어 먼저 pull 후 푸시합니다.
-
-
-
-pull 완료. 다시 푸시합니다.
-
-
-
-푸시 완료.
-
-RED 브랜치의 변경사항이 원격 저장소에 반영되었습니다.
-
-**완료된 작업:**
-- 테스트 실행 및 실패 확인 (RED 단계)
-- 로컬 커밋 완료
-- 원격 저장소에 푸시 완료
-
-현재 상태:
-- RED 브랜치에 실패하는 테스트 코드가 커밋되어 있습니다
-- 다음 단계(GREEN)로 진행할 수 있습니다
-
-다음 단계로 진행할까요?
-
----
-
-**User**
-
-test_addition_0_plus_1 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_addition_0_plus_1` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.add()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 진행합니다.
-
-
-
-테스트는 실행되었고, `test_addition_0_plus_1`는 이미 커밋된 파일에 포함되어 있어 커밋할 변경사항이 없습니다.
-
-**테스트 결과:**
-- `test_addition_0_plus_1` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == 1` - `Arithmetic.add()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_addition_0_plus_1` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소에 푸시할까요, 아니면 다른 작업을 진행할까요?
-
----
-
-**User**
-
-네
-
----
-
-**Cursor**
-
-
-원격 저장소 상태 확인 후 푸시합니다.
-
-
-
-원격 저장소는 이미 최신 상태입니다.
-
-**현재 상태:**
-- `test_addition_0_plus_1` 테스트 실행 완료 (실패 확인 - RED 단계)
-- 코드 변경사항 없음 (이미 커밋된 상태)
-- 원격 저장소와 동기화됨
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_addition_negative_numbers 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_addition_negative_numbers` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.add()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_addition_negative_numbers` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == -11` - `Arithmetic.add()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_addition_negative_numbers` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_subtraction_5_minus_2 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_subtraction_5_minus_2` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.subtract()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_subtraction_5_minus_2` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == 3` - `Arithmetic.subtract()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_subtraction_5_minus_2` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_multiplication_negative_numbers 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_multiplication_negative_numbers` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.multiply()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_multiplication_negative_numbers` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == 15` - `Arithmetic.multiply()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_multiplication_negative_numbers` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_multiplication_by_zero 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_multiplication_by_zero` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.multiply()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_multiplication_by_zero` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == 0` - `Arithmetic.multiply()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_multiplication_by_zero` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_division_5_by_2_integer 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_division_5_by_2_integer` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.divide()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_division_5_by_2_integer` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == 2` - `Arithmetic.divide()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_division_5_by_2_integer` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_division_5_by_2_quotient 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_division_5_by_2_quotient` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.divide_quotient()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_division_5_by_2_quotient` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == 2.5` - `Arithmetic.divide_quotient()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_division_5_by_2_quotient` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_division_negative_by_positive 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_division_negative_by_positive` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.divide()`가 아직 구현되지 않아 `None`을 반환합니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_division_negative_by_positive` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `assert None == -5` - `Arithmetic.divide()`가 아직 구현되지 않아 `None` 반환
-
-**커밋 상태:**
-- `test_division_negative_by_positive` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-다음 테스트를 진행하거나, GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-test_division_by_zero_exception 함수를 테스트해줘 그리고 커밋도 함께 진행해줘
-
----
-
-**Cursor**
-
-
-`test_division_by_zero_exception` 테스트를 실행하고, 결과 확인 후 커밋하겠습니다.
-
-
-
-테스트가 예상대로 실패했습니다. `Arithmetic.divide()`가 아직 구현되지 않아 `ArithmeticError`를 발생시키지 않습니다. RED 단계에 맞는 결과입니다.
-
-커밋 상태 확인 중입니다.
-
-
-
-**테스트 결과:**
-- `test_division_by_zero_exception` 테스트 실행 완료
-- 예상대로 실패 (RED 단계)
-- 오류: `Failed: DID NOT RAISE <class 'ArithmeticError'>` - `Arithmetic.divide()`가 아직 구현되지 않아 예외를 발생시키지 않음
-
-**커밋 상태:**
-- `test_division_by_zero_exception` 함수는 이미 `tests/test_arithmetic.py`에 포함되어 있고 이전에 커밋되었습니다
-- 현재 커밋할 변경사항이 없습니다
-
-테스트 실행 결과만 확인했고, 코드 변경은 없었습니다. 원격 저장소는 이미 최신 상태입니다.
-
-모든 테스트 케이스의 실패를 확인했습니다. GREEN 단계로 넘어가 구현을 시작할까요?
-
----
-
-**User**
-
-지금까지 한 내용을 테스트 커버리즈를 알려줘
-
----
-
-**Cursor**
-
-
-테스트 커버리지 확인 중입니다. `pytest-cov` 설치 여부 확인 후 커버리지를 실행합니다.
-
-
-
-`pytest-cov`가 없습니다. 설치 후 커버리지를 실행합니다.
-
-
-
-테스트 커버리지 확인 중입니다.
-
-
-
-## 테스트 커버리지 결과
-
-```
-Name                Stmts   Miss  Cover   Missing
--------------------------------------------------
-src\__init__.py         0      0   100%
-src\arithmetic.py      16      0   100%
--------------------------------------------------
-TOTAL                  16      0   100%
-```
-
-### 분석
-
-- 코드 커버리지: 100%
-  - `src/arithmetic.py`의 모든 문장(16줄)이 실행됨
-  - 함수들이 호출되어 `pass` 문이 실행됨
-
-- 테스트 결과: 10개 모두 실패 (RED 단계)
-  - 모든 함수가 `pass`만 있어 `None` 반환
-  - 예외 처리도 구현되지 않음
-
-### 현재 상태 요약
-
-| 항목 | 상태 |
-|------|------|
-| 테스트 케이스 수 | 10개 |
-| 테스트 실행 결과 | 모두 실패 (예상됨) |
-| 코드 커버리지 | 100% (함수 호출은 됨) |
-| 구현 상태 | 미구현 (RED 단계) |
-
-### 결론
-
-RED 단계 완료:
-- 모든 테스트 케이스 작성 완료
-- 모든 테스트가 실패 (예상 동작)
-- 코드는 호출되지만 구현이 없어 실패
-
-다음 단계: GREEN 단계로 넘어가 함수들을 구현하면 테스트가 통과할 것입니다.
-
-```plaintext
-Name                Stmts   Miss  Cover   Missing
--------------------------------------------------
-src\__init__.py         0      0   100%
-src\arithmetic.py      16      0   100%
--------------------------------------------------
-TOTAL                  16      0   100%
-```
-
----
-
-**User**
-
-지금까지의 작업 내용을 report 폴더에 마크다운으로 내보내줘
-
----
-
-**Cursor**
-
-
-지금까지의 작업 내용을 마크다운 리포트로 정리해 `report` 폴더에 저장합니다.
-
-
-
-마크다운 리포트 작성 중입니다.
-
+✅ **커버리지 100% 달성!** 이제 README를 업데이트하겠습니다.
 
 ```markdown
-# RED 단계 작업 리포트
+# Arithmetic Operations - TDD 프로젝트
+
+## 프로젝트 개요
+
+사칙연산(+, -, *, /) 기능의 정확도를 검증하는 단위 테스트 프로젝트입니다.
+본 프로젝트는 **RED-GREEN-REFACTOR** 방식의 TDD(Test-Driven Development)를 통해 진행됩니다.
 
 ## 프로젝트 정보
 
@@ -1070,317 +674,224 @@ TOTAL                  16      0   100%
 - **버전**: v1.0
 - **테스트 범위**: 공통 모듈
 - **테스트 조직**: 개발팀
-- **작업 단계**: RED (Test-Driven Development)
 
----
+## 테스트 목적
 
-## 작업 일정
+사칙연산의 정확도와 예외 처리를 검증하여 안정적인 수학 연산 모듈을 구축합니다.
 
-| 날짜 | 작업 내용 | 상태 |
-|------|----------|------|
-| 2020-09-01 | 프로젝트 초기 설정 및 구조 생성 | 완료 |
-| 2020-09-01 | 테스트 케이스 작성 | 완료 |
-| 2020-09-01 | RED 단계 테스트 실행 및 검증 | 완료 |
+## 테스트 환경
 
----
+- **언어**: Python
+- **IDE**: PyCharm
+- **운영 체제**: Windows 10
 
-## 1. 프로젝트 초기 설정
+## 테스트 케이스
 
-### 1.1 프로젝트 구조 생성
+### 기본 연산 테스트
+
+| 테스트 케이스 | 입력값 | 예상값 | 중요도 | 상태 |
+|------------|--------|--------|--------|------|
+| 덧셈 | 1 + 10 | 11 | 중요 | 성공 |
+| 덧셈 | 0 + 1 | 1 | 중요 | 성공 |
+| 덧셈 | -1 + (-10) | -11 | 보통 | 성공 |
+| 뺄셈 | 5 - 2 | 3 | 중요 | 성공 |
+| 곱셈 | -5 * -3 | 15 | 보통 | 성공 |
+| 곱셈 | 0 * 10 | 0 | 낮음 | 성공 |
+| 나눗셈 (정수) | 5 / 2 | 2 | 중요 | 성공 |
+| 나눗셈 (몫) | 5 ÷ 2 | 2.5 | 보통 | 성공 |
+| 나눗셈 | -10 / 2 | -5 | 중요 | 성공 |
+
+### 예외 처리 테스트
+
+| 테스트 케이스 | 입력값 | 예상값 | 중요도 | 상태 |
+|------------|--------|--------|--------|------|
+| 0으로 나누기 | 0 / 0 | ArithmeticException | 중요 | 성공 |
+
+## TDD 프로세스 (RED-GREEN-REFACTOR)
+
+### 1. RED 단계 --> 진행중 ing~~!!
+- 실패하는 테스트 케이스를 먼저 작성합니다.
+- 모든 테스트 케이스가 실패하는 것을 확인합니다.
+
+### 2. GREEN 단계
+- 테스트를 통과하는 최소한의 코드를 작성합니다.
+- 모든 테스트 케이스가 성공하는 것을 확인합니다.
+
+#### 구현 우선순위
+
+| 우선순위 | 함수 | 구현 내용 | 중요도 |
+|---------|------|----------|--------|
+| 1 | `add(a, b)` | `return a + b` | 중요 |
+| 2 | `subtract(a, b)` | `return a - b` | 중요 |
+| 3 | `multiply(a, b)` | `return a * b` | 보통 |
+| 4 | `divide(a, b)` | 정수 나눗셈 + 0 예외 처리 | 중요 |
+| 5 | `divide_quotient(a, b)` | 소수점 나눗셈 + 0 예외 처리 | 보통 |
+
+#### 비기능 요구사항
+- [x] 0으로 나눌 때 `ArithmeticError` 발생
+- [x] 음수 입력값 정상 처리
+- [x] 테스트 커버리지 100% 유지
+
+### 3. REFACTOR 단계
+- 코드의 품질을 개선합니다.
+- 테스트는 계속 통과해야 합니다.
+
+## 전제 조건
+
+1. 프로그램은 오류 없이 성공적으로 컴파일되어야 합니다.
+2. 모든 종속성을 올바르게 설치하고 구성해야 합니다.
+3. Python 3.x 버전이 설치되어 있어야 합니다.
+
+## 설치 및 실행
+
+### 1. 프로젝트 클론 또는 다운로드
+
+```bash
+cd Arithmetic
+```
+
+### 2. 가상 환경 설정 (선택사항)
+
+```bash
+python -m venv venv
+venv\Scripts\activate  # Windows
+```
+
+### 3. 의존성 설치
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. 테스트 실행
+
+```bash
+# pytest를 사용하는 경우
+pytest
+
+# unittest를 사용하는 경우
+python -m unittest discover
+```
+
+## 성공/실패 기준
+
+### 성공 기준
+- 모든 테스트 사례가 예상한 결과를 생성합니다.
+- 예외 처리가 올바르게 동작합니다.
+
+### 실패 기준
+- 테스트 케이스가 예상한 결과를 생성하지 않습니다.
+- 예외가 발생하지 않아야 할 경우 예외가 발생합니다.
+
+## 특별 절차
+
+1. 테스트 결과를 기록하고 이에 따라 테스트 사례 문서를 업데이트합니다.
+2. 즉각적인 해결을 위해 모든 실패를 개발팀에 전달하세요.
+
+## 프로젝트 구조
 
 ```
 Arithmetic/
 ├── README.md
 ├── requirements.txt
-├── .gitignore
 ├── src/
-│   ├── __init__.py
 │   └── arithmetic.py
 └── tests/
-    ├── __init__.py
     └── test_arithmetic.py
 ```
 
-### 1.2 Git 저장소 설정
+## 참고사항
 
-- Git 저장소 초기화 완료
-- GitHub 원격 저장소 연결: `https://github.com/binpapa1-hub/Arithmetic.git`
-- 브랜치 전략:
-  - `main`: 메인 브랜치
-  - `RED`: RED 단계 작업 브랜치 (현재 작업 중)
+- 다양한 조합(양수, 음수, 0)을 포함한 테스트 케이스를 통해 연산의 정확도와 범위를 검증합니다.
+- 정수 나눗셈과 소수점을 포함한 몫 계산을 모두 테스트합니다.
+- 예외 처리(0으로 나누기)를 반드시 포함합니다.
 
-### 1.3 의존성 관리
 
-**requirements.txt**
 ```
-pytest>=7.0.0
-pytest-cov>=7.0.0
-```
+
+✅ **비기능 요구사항 검증 완료!**
+
+| 요구사항 | 상태 | 검증 방법 |
+|---------|------|----------|
+| 0으로 나눌 때 `ArithmeticError` 발생 | ✅ 완료 | 테스트 2개 통과 |
+| 음수 입력값 정상 처리 | ✅ 완료 | 테스트 통과 |
+| 테스트 커버리지 100% 유지 | ✅ 완료 | `pytest-cov` 확인 |
+
+**결과:**
+- 11개 테스트 통과
+- 코드 커버리지 100%
+- README 체크박스 업데이트 완료
 
 ---
 
-## 2. 테스트 케이스 작성
+**User**
 
-### 2.1 테스트 케이스 목록
-
-총 **10개의 테스트 케이스**를 작성했습니다.
-
-#### 덧셈 테스트 (3개)
-
-1. **test_addition_1_plus_10**
-   - 입력: `1, 10`
-   - 예상값: `11`
-   - 중요도: 중요
-
-2. **test_addition_0_plus_1**
-   - 입력: `0, 1`
-   - 예상값: `1`
-   - 중요도: 중요
-
-3. **test_addition_negative_numbers**
-   - 입력: `-1, -10`
-   - 예상값: `-11`
-   - 중요도: 보통
-
-#### 뺄셈 테스트 (1개)
-
-4. **test_subtraction_5_minus_2**
-   - 입력: `5, 2`
-   - 예상값: `3`
-   - 중요도: 중요
-
-#### 곱셈 테스트 (2개)
-
-5. **test_multiplication_negative_numbers**
-   - 입력: `-5, -3`
-   - 예상값: `15`
-   - 중요도: 보통
-
-6. **test_multiplication_by_zero**
-   - 입력: `0, 10`
-   - 예상값: `0`
-   - 중요도: 낮음
-
-#### 나눗셈 테스트 (3개)
-
-7. **test_division_5_by_2_integer**
-   - 입력: `5, 2`
-   - 예상값: `2` (정수 나눗셈)
-   - 중요도: 중요
-
-8. **test_division_5_by_2_quotient**
-   - 입력: `5, 2`
-   - 예상값: `2.5` (몫, 소수점 포함)
-   - 중요도: 보통
-
-9. **test_division_negative_by_positive**
-   - 입력: `-10, 2`
-   - 예상값: `-5`
-   - 중요도: 중요
-
-#### 예외 처리 테스트 (1개)
-
-10. **test_division_by_zero_exception**
-    - 입력: `0, 0`
-    - 예상값: `ArithmeticError` 예외 발생
-    - 중요도: 중요
+첨부한 이미지처럼 값을 입력 받아서 처리할수 있는 콘솔프로그램을 만들어줘
 
 ---
 
-## 3. 구현 코드 상태 (RED 단계)
-
-### 3.1 현재 구현 상태
-
-**src/arithmetic.py**
+**Cursor**
 
 ```python
-class Arithmetic:
-    """사칙연산을 수행하는 클래스"""
+"""
+사칙연산 콘솔 프로그램
+"""
+from arithmetic import Arithmetic
+
+
+def main():
+    print("입력화면")
+    print()
     
-    @staticmethod
-    def add(a, b):
-        """두 수를 더합니다"""
-        pass
+    a = int(input("첫번째 정수값>>"))
+    print()
     
-    @staticmethod
-    def subtract(a, b):
-        """두 수를 뺍니다"""
-        pass
+    operator = input("연산자>>")
+    print()
     
-    @staticmethod
-    def multiply(a, b):
-        """두 수를 곱합니다"""
-        pass
+    b = int(input("두번째 정수값>"))
+    print()
     
-    @staticmethod
-    def divide(a, b):
-        """두 수를 나눕니다 (정수 나눗셈)"""
-        pass
+    print("결과 뷰 화면")
+    print()
+    print("=" * 30)
+    print()
+    print(f"{a} {operator} {b}을 계산합니다.")
+    print()
+    print("=" * 30)
+    print()
     
-    @staticmethod
-    def divide_quotient(a, b):
-        """두 수를 나눕니다 (몫, 소수점 포함)"""
-        pass
-```
+    if operator == "+":
+        result = Arithmetic.add(a, b)
+    elif operator == "-":
+        result = Arithmetic.subtract(a, b)
+    elif operator == "*":
+        result = Arithmetic.multiply(a, b)
+    elif operator == "/":
+        result = Arithmetic.divide(a, b)
+    else:
+        print("잘못된 연산자입니다.")
+        return
+    
+    print(f"{a}{operator}{b}={result}입니다.")
 
-**상태**: 모든 메서드가 `pass`만 포함하여 구현되지 않음 (RED 단계 의도)
 
----
-
-## 4. 테스트 실행 결과
-
-### 4.1 전체 테스트 실행 결과
-
-```
-============================= test session starts =============================
-platform win32 -- Python 3.10.11, pytest-9.0.2, pluggy-1.6.0
-collected 10 items
-
-tests\test_arithmetic.py FFFFFFFFFF                                      [100%]
-
-================================== FAILURES ===================================
-[모든 테스트 실패]
-============================= 10 failed in 0.10s ==============================
-```
-
-### 4.2 개별 테스트 실패 상세
-
-| 테스트 케이스 | 실패 원인 | 상태 |
-|--------------|----------|------|
-| test_addition_1_plus_10 | `assert None == 11` | ✅ 예상된 실패 |
-| test_addition_0_plus_1 | `assert None == 1` | ✅ 예상된 실패 |
-| test_addition_negative_numbers | `assert None == -11` | ✅ 예상된 실패 |
-| test_subtraction_5_minus_2 | `assert None == 3` | ✅ 예상된 실패 |
-| test_multiplication_negative_numbers | `assert None == 15` | ✅ 예상된 실패 |
-| test_multiplication_by_zero | `assert None == 0` | ✅ 예상된 실패 |
-| test_division_5_by_2_integer | `assert None == 2` | ✅ 예상된 실패 |
-| test_division_5_by_2_quotient | `assert None == 2.5` | ✅ 예상된 실패 |
-| test_division_negative_by_positive | `assert None == -5` | ✅ 예상된 실패 |
-| test_division_by_zero_exception | `Failed: DID NOT RAISE ArithmeticError` | ✅ 예상된 실패 |
-
-**결론**: 모든 테스트가 예상대로 실패했습니다. RED 단계 목표 달성.
-
----
-
-## 5. 테스트 커버리지
-
-### 5.1 커버리지 결과
-
-```
-Name                Stmts   Miss  Cover   Missing
--------------------------------------------------
-src\__init__.py         0      0   100%
-src\arithmetic.py      16      0   100%
--------------------------------------------------
-TOTAL                  16      0   100%
-```
-
-### 5.2 커버리지 분석
-
-- **코드 커버리지**: 100%
-  - 모든 함수가 호출되어 `pass` 문이 실행됨
-  - 함수 시그니처는 모두 테스트됨
-
-- **구현 상태**: 미구현
-  - 모든 함수가 `pass`만 포함
-  - 실제 로직이 없어 테스트 실패
-
----
-
-## 6. RED 단계 완료 확인
-
-### 6.1 완료 항목
-
-- ✅ 프로젝트 구조 생성
-- ✅ 테스트 케이스 작성 (10개)
-- ✅ 모든 테스트 실행 및 실패 확인
-- ✅ 테스트 커버리지 확인 (100%)
-- ✅ Git 커밋 및 푸시 완료
-
-### 6.2 RED 단계 목표 달성
-
-**RED 단계의 목표**: 실패하는 테스트를 작성하는 것
-
-- ✅ 모든 테스트 케이스 작성 완료
-- ✅ 모든 테스트가 예상대로 실패함
-- ✅ 코드는 호출되지만 구현이 없어 실패함
-
----
-
-## 7. 다음 단계 (GREEN)
-
-### 7.1 GREEN 단계 계획
-
-다음 단계에서는 다음 작업을 수행합니다:
-
-1. **구현 작업**
-   - `Arithmetic.add()` 구현
-   - `Arithmetic.subtract()` 구현
-   - `Arithmetic.multiply()` 구현
-   - `Arithmetic.divide()` 구현 (정수 나눗셈)
-   - `Arithmetic.divide_quotient()` 구현 (소수점 포함)
-   - 예외 처리 구현 (0으로 나누기)
-
-2. **테스트 통과 확인**
-   - 모든 테스트가 통과하는지 확인
-   - 테스트 커버리지 재확인
-
-3. **커밋 및 푸시**
-   - GREEN 브랜치 생성
-   - 구현 코드 커밋
-   - 원격 저장소에 푸시
-
----
-
-## 8. 참고 사항
-
-### 8.1 테스트 환경
-
-- **언어**: Python 3.10.11
-- **테스트 프레임워크**: pytest 9.0.2
-- **커버리지 도구**: pytest-cov 7.0.0
-- **운영 체제**: Windows 10
-
-### 8.2 Git 브랜치 전략
-
-- `main`: 메인 브랜치
-- `RED`: RED 단계 작업 브랜치 (현재)
-- `GREEN`: GREEN 단계 작업 브랜치 (예정)
-- `REFACTOR`: REFACTOR 단계 작업 브랜치 (예정)
-
----
-
-## 9. 결론
-
-RED 단계가 성공적으로 완료되었습니다. 모든 테스트 케이스가 작성되었고, 예상대로 실패하는 것을 확인했습니다. 이제 GREEN 단계로 진행하여 테스트를 통과시키는 최소한의 코드를 구현할 준비가 되었습니다.
-
----
-
-**작성일**: 2025-12-16  
-**작성자**: 개발팀  
-**문서 버전**: v1.0
+if __name__ == "__main__":
+    main()
 
 ```
 
+완료! 다음 명령어로 실행하세요:
 
-작업 내용을 마크다운 리포트로 정리해 `report/RED_Phase_Report.md`에 저장했습니다.
+```bash
+cd src
+python console_app.py
+```
 
-## 리포트 내용
+실행하면 이미지처럼 값을 입력받아 계산 결과를 출력합니다.
 
-리포트에는 다음 내용이 포함되어 있습니다:
-
-1. **프로젝트 정보** - 기본 정보 및 작업 단계
-2. **작업 일정** - 완료된 작업 목록
-3. **프로젝트 초기 설정** - 구조, Git 설정, 의존성
-4. **테스트 케이스 작성** - 10개 테스트 케이스 상세
-5. **구현 코드 상태** - 현재 RED 단계 코드 상태
-6. **테스트 실행 결과** - 모든 테스트 실패 상세
-7. **테스트 커버리지** - 100% 커버리지 분석
-8. **RED 단계 완료 확인** - 완료 항목 및 목표 달성 여부
-9. **다음 단계 (GREEN)** - GREEN 단계 계획
-10. **참고 사항** - 테스트 환경 및 Git 브랜치 전략
-
-리포트 파일 위치: `report/RED_Phase_Report.md`
-
-이 리포트를 커밋하거나 추가 수정이 필요하면 알려주세요.
+```shellscript
+cd src
+python console_app.py
+```
 

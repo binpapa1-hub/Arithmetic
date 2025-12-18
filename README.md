@@ -77,6 +77,42 @@
 - 코드의 품질을 개선합니다.
 - 테스트는 계속 통과해야 합니다.
 
+#### PyQt GUI 리팩토링 목록
+
+##### 4.1 UI 구성 요소
+
+1. **CalculatorWindow (QMainWindow)**
+   - 메인 윈도우
+   - 레이아웃 관리
+
+2. **DisplayWidget (QLabel)**
+   - 입력값 및 결과 표시
+   - 폰트 스타일링
+
+3. **ButtonGrid (QGridLayout)**
+   - 4x4 그리드 레이아웃
+   - 숫자 버튼 (0-9)
+   - 연산자 버튼 (+, -, ×, /)
+   - 기능 버튼 (+, -, ., =)
+
+##### 4.2 이벤트 처리 흐름
+
+```
+사용자 버튼 클릭
+    ↓
+CalculatorWindow.button_clicked()
+    ↓
+CalculatorPresenter.handle_input()
+    ↓
+CalculatorService.calculate()
+    ↓
+Arithmetic 메서드 호출
+    ↓
+결과 반환
+    ↓
+DisplayWidget.update()
+```
+
 ## 전제 조건
 
 1. 프로그램은 오류 없이 성공적으로 컴파일되어야 합니다.
