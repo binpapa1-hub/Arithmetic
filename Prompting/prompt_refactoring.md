@@ -1,5 +1,5 @@
 # Test cases report analysis
-_Exported on 12/18/2025 at 13:19:45 GMT+9 from Cursor (2.2.20)_
+_Exported on 12/18/2025 at 13:46:33 GMT+9 from Cursor (2.2.20)_
 
 ---
 
@@ -1846,4 +1846,1117 @@ flake8 src/gui/*.py src/calculator_service.py src/calculator_presenter.py
 - 테스트 가능한 구조
 
 이 계획서대로 구현을 진행할까요? 원하시면 단계별로 코드를 생성하겠습니다.
+
+---
+
+**User**
+
+@report/Refactoring_Plan.md ## 4단계: PyQt GUI 구현
+
+### 4.1 UI 구성 요소
+
+1. **CalculatorWindow (QMainWindow)**
+   - 메인 윈도우
+   - 레이아웃 관리
+
+2. **DisplayWidget (QLabel)**
+   - 입력값 및 결과 표시
+   - 폰트 스타일링
+
+3. **ButtonGrid (QGridLayout)**
+   - 4x4 그리드 레이아웃
+   - 숫자 버튼 (0-9)
+   - 연산자 버튼 (+, -, ×, /)
+   - 기능 버튼 (+, -, ., =)
+
+### 4.2 이벤트 처리 흐름
+
+```
+사용자 버튼 클릭
+    ↓
+CalculatorWindow.button_clicked()
+    ↓
+CalculatorPresenter.handle_input()
+    ↓
+CalculatorService.calculate()
+    ↓
+Arithmetic 메서드 호출
+    ↓
+결과 반환
+    ↓
+DisplayWidget.update()
+```
+
+---
+루트에 있는 README.md 파일에 첨부한 내용을 Refactoring시 해야 할 목록으로 추가해줘
+
+---
+
+**Cursor**
+
+
+README.md에 리팩토링 목록 추가 중.
+
+
+```markdown
+# Arithmetic Operations - TDD 프로젝트
+
+## 프로젝트 개요
+
+사칙연산(+, -, *, /) 기능의 정확도를 검증하는 단위 테스트 프로젝트입니다.
+본 프로젝트는 **RED-GREEN-REFACTOR** 방식의 TDD(Test-Driven Development)를 통해 진행됩니다.
+
+## 프로젝트 정보
+
+- **프로젝트명**: 인사관리 앱 시스템 구축 (정산 시스템)
+- **테스트 ID**: TC-CMM-001 / TC-AO-001
+- **작성자**: 홍길동
+- **승인자**: 박문수
+- **작성일**: 2020-09-01
+- **버전**: v1.0
+- **테스트 범위**: 공통 모듈
+- **테스트 조직**: 개발팀
+
+## 테스트 목적
+
+사칙연산의 정확도와 예외 처리를 검증하여 안정적인 수학 연산 모듈을 구축합니다.
+
+## 테스트 환경
+
+- **언어**: Python
+- **IDE**: PyCharm
+- **운영 체제**: Windows 10
+
+## 테스트 케이스
+
+### 기본 연산 테스트
+
+| 테스트 케이스 | 입력값 | 예상값 | 중요도 | 상태 |
+|------------|--------|--------|--------|------|
+| 덧셈 | 1 + 10 | 11 | 중요 | 성공 |
+| 덧셈 | 0 + 1 | 1 | 중요 | 성공 |
+| 덧셈 | -1 + (-10) | -11 | 보통 | 성공 |
+| 뺄셈 | 5 - 2 | 3 | 중요 | 성공 |
+| 곱셈 | -5 * -3 | 15 | 보통 | 성공 |
+| 곱셈 | 0 * 10 | 0 | 낮음 | 성공 |
+| 나눗셈 (정수) | 5 / 2 | 2 | 중요 | 성공 |
+| 나눗셈 (몫) | 5 ÷ 2 | 2.5 | 보통 | 성공 |
+| 나눗셈 | -10 / 2 | -5 | 중요 | 성공 |
+
+### 예외 처리 테스트
+
+| 테스트 케이스 | 입력값 | 예상값 | 중요도 | 상태 |
+|------------|--------|--------|--------|------|
+| 0으로 나누기 | 0 / 0 | ArithmeticException | 중요 | 성공 |
+
+## TDD 프로세스 (RED-GREEN-REFACTOR)
+
+### 1. RED 단계 --> 진행중 ing~~!!
+- 실패하는 테스트 케이스를 먼저 작성합니다.
+- 모든 테스트 케이스가 실패하는 것을 확인합니다.
+
+### 2. GREEN 단계
+- 테스트를 통과하는 최소한의 코드를 작성합니다.
+- 모든 테스트 케이스가 성공하는 것을 확인합니다.
+
+#### 구현 우선순위
+
+| 우선순위 | 함수 | 구현 내용 | 중요도 |
+|---------|------|----------|--------|
+| 1 | `add(a, b)` | `return a + b` | 중요 |
+| 2 | `subtract(a, b)` | `return a - b` | 중요 |
+| 3 | `multiply(a, b)` | `return a * b` | 보통 |
+| 4 | `divide(a, b)` | 정수 나눗셈 + 0 예외 처리 | 중요 |
+| 5 | `divide_quotient(a, b)` | 소수점 나눗셈 + 0 예외 처리 | 보통 |
+
+#### 비기능 요구사항
+- [x] 0으로 나눌 때 `ArithmeticError` 발생
+- [x] 음수 입력값 정상 처리
+- [x] 테스트 커버리지 100% 유지
+
+### 3. REFACTOR 단계
+- 코드의 품질을 개선합니다.
+- 테스트는 계속 통과해야 합니다.
+
+#### PyQt GUI 리팩토링 목록
+
+##### 4.1 UI 구성 요소
+
+1. **CalculatorWindow (QMainWindow)**
+   - 메인 윈도우
+   - 레이아웃 관리
+
+2. **DisplayWidget (QLabel)**
+   - 입력값 및 결과 표시
+   - 폰트 스타일링
+
+3. **ButtonGrid (QGridLayout)**
+   - 4x4 그리드 레이아웃
+   - 숫자 버튼 (0-9)
+   - 연산자 버튼 (+, -, ×, /)
+   - 기능 버튼 (+, -, ., =)
+
+##### 4.2 이벤트 처리 흐름
+
+```
+사용자 버튼 클릭
+    ↓
+CalculatorWindow.button_clicked()
+    ↓
+CalculatorPresenter.handle_input()
+    ↓
+CalculatorService.calculate()
+    ↓
+Arithmetic 메서드 호출
+    ↓
+결과 반환
+    ↓
+DisplayWidget.update()
+```
+
+## 전제 조건
+
+1. 프로그램은 오류 없이 성공적으로 컴파일되어야 합니다.
+2. 모든 종속성을 올바르게 설치하고 구성해야 합니다.
+3. Python 3.x 버전이 설치되어 있어야 합니다.
+
+## 설치 및 실행
+
+### 1. 프로젝트 클론 또는 다운로드
+
+```bash
+cd Arithmetic
+```
+
+### 2. 가상 환경 설정 (선택사항)
+
+```bash
+python -m venv venv
+venv\Scripts\activate  # Windows
+```
+
+### 3. 의존성 설치
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. 테스트 실행
+
+```bash
+# pytest를 사용하는 경우
+pytest
+
+# unittest를 사용하는 경우
+python -m unittest discover
+```
+
+## 성공/실패 기준
+
+### 성공 기준
+- 모든 테스트 사례가 예상한 결과를 생성합니다.
+- 예외 처리가 올바르게 동작합니다.
+
+### 실패 기준
+- 테스트 케이스가 예상한 결과를 생성하지 않습니다.
+- 예외가 발생하지 않아야 할 경우 예외가 발생합니다.
+
+## 특별 절차
+
+1. 테스트 결과를 기록하고 이에 따라 테스트 사례 문서를 업데이트합니다.
+2. 즉각적인 해결을 위해 모든 실패를 개발팀에 전달하세요.
+
+## 프로젝트 구조
+
+```
+Arithmetic/
+├── README.md
+├── requirements.txt
+├── src/
+│   └── arithmetic.py
+└── tests/
+    └── test_arithmetic.py
+```
+
+## 참고사항
+
+- 다양한 조합(양수, 음수, 0)을 포함한 테스트 케이스를 통해 연산의 정확도와 범위를 검증합니다.
+- 정수 나눗셈과 소수점을 포함한 몫 계산을 모두 테스트합니다.
+- 예외 처리(0으로 나누기)를 반드시 포함합니다.
+
+
+```
+
+
+README.md의 REFACTOR 단계에 PyQt GUI 리팩토링 목록을 추가했습니다.
+
+추가된 내용:
+- **4.1 UI 구성 요소**: CalculatorWindow, DisplayWidget, ButtonGrid 설명
+- **4.2 이벤트 처리 흐름**: 사용자 버튼 클릭부터 결과 표시까지의 흐름도
+
+이제 README.md에서 리팩토링 시 구현해야 할 UI 구성 요소와 이벤트 처리 흐름을 확인할 수 있습니다.
+
+---
+
+**User**
+
+@README.md 중 @README.md (76-184) 을 먼저 실행해줘
+
+---
+
+**Cursor**
+
+
+PyQt GUI 리팩토링 구현을 시작합니다. 단계별로 진행합니다.
+
+
+
+단계별로 구현 중입니다.
+
+
+```python
+"""
+계산기 서비스 - 비즈니스 로직 담당
+SOLID 원칙: SRP (단일 책임), DIP (의존성 역전)
+"""
+from typing import Dict, Callable
+from arithmetic import Arithmetic
+
+
+class CalculatorService:
+    """계산 로직을 처리하는 서비스 클래스"""
+    
+    # Strategy 패턴: 연산자 확장 가능 (OCP 원칙)
+    OPERATORS: Dict[str, Callable[[float, float], float]] = {
+        "+": Arithmetic.add,
+        "-": Arithmetic.subtract,
+        "×": Arithmetic.multiply,
+        "*": Arithmetic.multiply,  # 별칭
+        "/": Arithmetic.divide_quotient,  # 소수점 나눗셈
+    }
+    
+    @classmethod
+    def calculate(cls, a: float, operator: str, b: float) -> float:
+        """
+        계산을 수행합니다.
+        
+        Args:
+            a: 첫 번째 피연산자
+            operator: 연산자 (+, -, ×, /)
+            b: 두 번째 피연산자
+            
+        Returns:
+            계산 결과
+            
+        Raises:
+            ArithmeticError: 0으로 나눌 때
+            ValueError: 지원하지 않는 연산자
+        """
+        if operator not in cls.OPERATORS:
+            raise ValueError(f"지원하지 않는 연산자: {operator}")
+        
+        operation = cls.OPERATORS[operator]
+        return operation(a, b)
+    
+    @classmethod
+    def is_valid_operator(cls, operator: str) -> bool:
+        """연산자가 유효한지 확인"""
+        return operator in cls.OPERATORS
+
+```
+
+```python
+"""
+계산기 프레젠터 - UI와 비즈니스 로직 사이의 중재자
+SOLID 원칙: SRP, DIP
+"""
+from typing import Optional
+from calculator_service import CalculatorService
+
+
+class CalculatorState:
+    """계산기 상태 관리 클래스"""
+    
+    def __init__(self):
+        self.current_value: str = "0"
+        self.previous_value: Optional[float] = None
+        self.operator: Optional[str] = None
+        self.waiting_for_operand: bool = False
+    
+    def reset(self):
+        """상태 초기화"""
+        self.current_value = "0"
+        self.previous_value = None
+        self.operator = None
+        self.waiting_for_operand = False
+
+
+class CalculatorPresenter:
+    """계산기 프레젠터 - MVP 패턴"""
+    
+    def __init__(self, view):
+        """
+        Args:
+            view: CalculatorWindow 인스턴스
+        """
+        self.view = view
+        self.state = CalculatorState()
+        self.service = CalculatorService()
+    
+    def handle_number_input(self, number: str):
+        """숫자 입력 처리"""
+        if self.state.waiting_for_operand:
+            self.state.current_value = number
+            self.state.waiting_for_operand = False
+        else:
+            if self.state.current_value == "0":
+                self.state.current_value = number
+            else:
+                self.state.current_value += number
+        
+        self.view.update_display(self.state.current_value)
+    
+    def handle_operator_input(self, operator: str):
+        """연산자 입력 처리"""
+        if self.state.operator and not self.state.waiting_for_operand:
+            # 이전 연산 실행
+            self._perform_calculation()
+        
+        self.state.previous_value = float(self.state.current_value)
+        self.state.operator = operator
+        self.state.waiting_for_operand = True
+    
+    def handle_equals(self):
+        """등호 버튼 처리"""
+        if self.state.operator and self.state.previous_value is not None:
+            self._perform_calculation()
+            self.state.operator = None
+            self.state.previous_value = None
+            self.state.waiting_for_operand = True
+    
+    def handle_clear(self):
+        """초기화"""
+        self.state.reset()
+        self.view.update_display(self.state.current_value)
+    
+    def handle_sign_change(self):
+        """부호 변경 (+/-)"""
+        if self.state.current_value != "0":
+            if self.state.current_value.startswith("-"):
+                self.state.current_value = self.state.current_value[1:]
+            else:
+                self.state.current_value = "-" + self.state.current_value
+            self.view.update_display(self.state.current_value)
+    
+    def handle_decimal_point(self):
+        """소수점 입력"""
+        if self.state.waiting_for_operand:
+            self.state.current_value = "0."
+            self.state.waiting_for_operand = False
+        elif "." not in self.state.current_value:
+            self.state.current_value += "."
+        
+        self.view.update_display(self.state.current_value)
+    
+    def _perform_calculation(self):
+        """실제 계산 수행"""
+        try:
+            result = self.service.calculate(
+                self.state.previous_value,
+                self.state.operator,
+                float(self.state.current_value)
+            )
+            
+            # 결과 포맷팅 (정수면 정수로, 소수면 소수로)
+            if result == int(result):
+                self.state.current_value = str(int(result))
+            else:
+                self.state.current_value = str(result)
+            
+            self.view.update_display(self.state.current_value)
+            
+        except ArithmeticError as e:
+            self.view.show_error("0으로 나눌 수 없습니다.")
+            self.handle_clear()
+        except Exception as e:
+            self.view.show_error(f"오류: {str(e)}")
+            self.handle_clear()
+
+```
+
+
+GUI 컴포넌트 구현 중.
+
+
+```python
+"""
+GUI 모듈
+"""
+
+```
+
+```python
+"""
+디스플레이 위젯 - 계산 결과 표시
+"""
+from PyQt6.QtWidgets import QLabel
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFont
+
+
+class DisplayWidget(QLabel):
+    """계산기 디스플레이 위젯"""
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setup_ui()
+    
+    def setup_ui(self):
+        """UI 설정"""
+        self.setText("0")
+        self.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        
+        # 폰트 설정
+        font = QFont("Arial", 24, QFont.Weight.Bold)
+        self.setFont(font)
+        
+        # 스타일 설정
+        self.setStyleSheet("""
+            QLabel {
+                background-color: #1e1e1e;
+                color: #ffffff;
+                border: 2px solid #333;
+                border-radius: 5px;
+                padding: 10px;
+                min-height: 60px;
+            }
+        """)
+    
+    def update_display(self, value: str):
+        """디스플레이 업데이트"""
+        self.setText(value)
+
+```
+
+```python
+"""
+버튼 팩토리 - 버튼 생성 및 스타일링
+Factory Pattern 적용
+"""
+from PyQt6.QtWidgets import QPushButton
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFont
+
+
+class ButtonFactory:
+    """버튼 생성 팩토리 클래스"""
+    
+    @staticmethod
+    def create_number_button(number: str) -> QPushButton:
+        """숫자 버튼 생성"""
+        button = QPushButton(number)
+        button.setStyleSheet("""
+            QPushButton {
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 18px;
+                font-weight: bold;
+                min-height: 50px;
+            }
+            QPushButton:hover {
+                background-color: #e0e0e0;
+            }
+            QPushButton:pressed {
+                background-color: #d0d0d0;
+            }
+        """)
+        return button
+    
+    @staticmethod
+    def create_operator_button(operator: str) -> QPushButton:
+        """연산자 버튼 생성"""
+        button = QPushButton(operator)
+        button.setStyleSheet("""
+            QPushButton {
+                background-color: #ff9500;
+                color: white;
+                border: 1px solid #ff7700;
+                border-radius: 5px;
+                font-size: 18px;
+                font-weight: bold;
+                min-height: 50px;
+            }
+            QPushButton:hover {
+                background-color: #ff7700;
+            }
+            QPushButton:pressed {
+                background-color: #ff5500;
+            }
+        """)
+        return button
+    
+    @staticmethod
+    def create_equals_button() -> QPushButton:
+        """등호 버튼 생성"""
+        button = QPushButton("=")
+        button.setStyleSheet("""
+            QPushButton {
+                background-color: #007aff;
+                color: white;
+                border: 1px solid #0051d5;
+                border-radius: 5px;
+                font-size: 18px;
+                font-weight: bold;
+                min-height: 50px;
+            }
+            QPushButton:hover {
+                background-color: #0051d5;
+            }
+            QPushButton:pressed {
+                background-color: #003d9e;
+            }
+        """)
+        return button
+    
+    @staticmethod
+    def create_function_button(text: str) -> QPushButton:
+        """기능 버튼 생성 (+, -, .)"""
+        button = QPushButton(text)
+        button.setStyleSheet("""
+            QPushButton {
+                background-color: #d0d0d0;
+                border: 1px solid #b0b0b0;
+                border-radius: 5px;
+                font-size: 18px;
+                font-weight: bold;
+                min-height: 50px;
+            }
+            QPushButton:hover {
+                background-color: #c0c0c0;
+            }
+            QPushButton:pressed {
+                background-color: #b0b0b0;
+            }
+        """)
+        return button
+
+```
+
+```python
+"""
+계산기 메인 윈도우
+"""
+from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QGridLayout, QMessageBox
+from PyQt6.QtCore import Qt
+from gui.display_widget import DisplayWidget
+from gui.button_factory import ButtonFactory
+from calculator_presenter import CalculatorPresenter
+
+
+class CalculatorWindow(QMainWindow):
+    """계산기 메인 윈도우"""
+    
+    def __init__(self):
+        super().__init__()
+        self.presenter = CalculatorPresenter(self)
+        self.setup_ui()
+    
+    def setup_ui(self):
+        """UI 초기 설정"""
+        self.setWindowTitle("계산기")
+        self.setFixedSize(300, 400)
+        
+        # 중앙 위젯
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        
+        # 메인 레이아웃
+        main_layout = QVBoxLayout()
+        central_widget.setLayout(main_layout)
+        
+        # 디스플레이
+        self.display = DisplayWidget()
+        main_layout.addWidget(self.display)
+        
+        # 버튼 그리드
+        button_layout = QGridLayout()
+        self._create_buttons(button_layout)
+        main_layout.addLayout(button_layout)
+    
+    def _create_buttons(self, layout: QGridLayout):
+        """버튼 생성 및 배치"""
+        factory = ButtonFactory()
+        
+        # 버튼 배치 (4x4 그리드)
+        buttons = [
+            # Row 1
+            ("7", 0, 0), ("8", 0, 1), ("9", 0, 2), ("×", 0, 3),
+            # Row 2
+            ("4", 1, 0), ("5", 1, 1), ("6", 1, 2), ("-", 1, 3),
+            # Row 3
+            ("1", 2, 0), ("2", 2, 1), ("3", 2, 2), ("+", 2, 3),
+            # Row 4
+            ("+/-", 3, 0), ("0", 3, 1), (".", 3, 2), ("=", 3, 3),
+        ]
+        
+        for text, row, col in buttons:
+            if text.isdigit():
+                button = factory.create_number_button(text)
+                button.clicked.connect(lambda checked, n=text: self.presenter.handle_number_input(n))
+            elif text in ["+", "-", "×", "/"]:
+                button = factory.create_operator_button(text)
+                button.clicked.connect(lambda checked, op=text: self.presenter.handle_operator_input(op))
+            elif text == "=":
+                button = factory.create_equals_button()
+                button.clicked.connect(self.presenter.handle_equals)
+            elif text == "+/-":
+                button = factory.create_function_button(text)
+                button.clicked.connect(self.presenter.handle_sign_change)
+            elif text == ".":
+                button = factory.create_function_button(text)
+                button.clicked.connect(self.presenter.handle_decimal_point)
+            else:
+                button = factory.create_function_button(text)
+            
+            layout.addWidget(button, row, col)
+        
+        # Clear 버튼 추가
+        clear_button = factory.create_function_button("C")
+        clear_button.clicked.connect(self.presenter.handle_clear)
+        layout.addWidget(clear_button, 4, 0, 1, 4)  # 전체 너비
+    
+    def update_display(self, value: str):
+        """디스플레이 업데이트 (Presenter에서 호출)"""
+        self.display.update_display(value)
+    
+    def show_error(self, message: str):
+        """에러 메시지 표시"""
+        QMessageBox.warning(self, "오류", message)
+
+```
+
+```python
+"""
+GUI 계산기 실행 진입점
+"""
+import sys
+from PyQt6.QtWidgets import QApplication
+from src.gui.calculator_window import CalculatorWindow
+
+
+def main():
+    """메인 함수"""
+    app = QApplication(sys.argv)
+    
+    window = CalculatorWindow()
+    window.show()
+    
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+```pip-requirements
+pytest>=7.0.0
+pytest-cov>=7.0.0
+PyQt6>=6.6.0
+
+
+```
+
+
+import 경로 수정 중.
+
+
+```python
+"""
+계산기 메인 윈도우
+"""
+from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QGridLayout, QMessageBox
+from PyQt6.QtCore import Qt
+from src.gui.display_widget import DisplayWidget
+from src.gui.button_factory import ButtonFactory
+from src.calculator_presenter import CalculatorPresenter
+
+
+class CalculatorWindow(QMainWindow):
+    """계산기 메인 윈도우"""
+    
+    def __init__(self):
+        super().__init__()
+        self.presenter = CalculatorPresenter(self)
+        self.setup_ui()
+    
+    def setup_ui(self):
+        """UI 초기 설정"""
+        self.setWindowTitle("계산기")
+        self.setFixedSize(300, 400)
+        
+        # 중앙 위젯
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        
+        # 메인 레이아웃
+        main_layout = QVBoxLayout()
+        central_widget.setLayout(main_layout)
+        
+        # 디스플레이
+        self.display = DisplayWidget()
+        main_layout.addWidget(self.display)
+        
+        # 버튼 그리드
+        button_layout = QGridLayout()
+        self._create_buttons(button_layout)
+        main_layout.addLayout(button_layout)
+    
+    def _create_buttons(self, layout: QGridLayout):
+        """버튼 생성 및 배치"""
+        factory = ButtonFactory()
+        
+        # 버튼 배치 (4x4 그리드)
+        buttons = [
+            # Row 1
+            ("7", 0, 0), ("8", 0, 1), ("9", 0, 2), ("×", 0, 3),
+            # Row 2
+            ("4", 1, 0), ("5", 1, 1), ("6", 1, 2), ("-", 1, 3),
+            # Row 3
+            ("1", 2, 0), ("2", 2, 1), ("3", 2, 2), ("+", 2, 3),
+            # Row 4
+            ("+/-", 3, 0), ("0", 3, 1), (".", 3, 2), ("=", 3, 3),
+        ]
+        
+        for text, row, col in buttons:
+            if text.isdigit():
+                button = factory.create_number_button(text)
+                button.clicked.connect(lambda checked, n=text: self.presenter.handle_number_input(n))
+            elif text in ["+", "-", "×", "/"]:
+                button = factory.create_operator_button(text)
+                button.clicked.connect(lambda checked, op=text: self.presenter.handle_operator_input(op))
+            elif text == "=":
+                button = factory.create_equals_button()
+                button.clicked.connect(self.presenter.handle_equals)
+            elif text == "+/-":
+                button = factory.create_function_button(text)
+                button.clicked.connect(self.presenter.handle_sign_change)
+            elif text == ".":
+                button = factory.create_function_button(text)
+                button.clicked.connect(self.presenter.handle_decimal_point)
+            else:
+                button = factory.create_function_button(text)
+            
+            layout.addWidget(button, row, col)
+        
+        # Clear 버튼 추가
+        clear_button = factory.create_function_button("C")
+        clear_button.clicked.connect(self.presenter.handle_clear)
+        layout.addWidget(clear_button, 4, 0, 1, 4)  # 전체 너비
+    
+    def update_display(self, value: str):
+        """디스플레이 업데이트 (Presenter에서 호출)"""
+        self.display.update_display(value)
+    
+    def show_error(self, message: str):
+        """에러 메시지 표시"""
+        QMessageBox.warning(self, "오류", message)
+
+
+```
+
+
+PyQt6 설치 후 테스트 실행 중.
+
+
+
+CalculatorService 테스트 작성 및 실행 중.
+
+
+```python
+"""CalculatorService 테스트"""
+import pytest
+from src.calculator_service import CalculatorService
+
+
+class TestCalculatorService:
+    """CalculatorService 테스트 클래스"""
+    
+    def test_add(self):
+        """덧셈 테스트"""
+        result = CalculatorService.calculate(1, "+", 10)
+        assert result == 11
+    
+    def test_subtract(self):
+        """뺄셈 테스트"""
+        result = CalculatorService.calculate(5, "-", 2)
+        assert result == 3
+    
+    def test_multiply(self):
+        """곱셈 테스트"""
+        result = CalculatorService.calculate(-5, "×", -3)
+        assert result == 15
+    
+    def test_divide(self):
+        """나눗셈 테스트"""
+        result = CalculatorService.calculate(5, "/", 2)
+        assert result == 2.5
+    
+    def test_division_by_zero(self):
+        """0으로 나누기 예외 테스트"""
+        with pytest.raises(ArithmeticError):
+            CalculatorService.calculate(1, "/", 0)
+    
+    def test_invalid_operator(self):
+        """잘못된 연산자 예외 테스트"""
+        with pytest.raises(ValueError):
+            CalculatorService.calculate(1, "%", 2)
+    
+    def test_is_valid_operator(self):
+        """연산자 유효성 검사 테스트"""
+        assert CalculatorService.is_valid_operator("+") is True
+        assert CalculatorService.is_valid_operator("%") is False
+
+```
+
+
+import 경로 수정 중.
+
+
+```python
+"""
+계산기 서비스 - 비즈니스 로직 담당
+SOLID 원칙: SRP (단일 책임), DIP (의존성 역전)
+"""
+from typing import Dict, Callable
+from src.arithmetic import Arithmetic
+
+
+class CalculatorService:
+    """계산 로직을 처리하는 서비스 클래스"""
+    
+    # Strategy 패턴: 연산자 확장 가능 (OCP 원칙)
+    OPERATORS: Dict[str, Callable[[float, float], float]] = {
+        "+": Arithmetic.add,
+        "-": Arithmetic.subtract,
+        "×": Arithmetic.multiply,
+        "*": Arithmetic.multiply,  # 별칭
+        "/": Arithmetic.divide_quotient,  # 소수점 나눗셈
+    }
+    
+    @classmethod
+    def calculate(cls, a: float, operator: str, b: float) -> float:
+        """
+        계산을 수행합니다.
+        
+        Args:
+            a: 첫 번째 피연산자
+            operator: 연산자 (+, -, ×, /)
+            b: 두 번째 피연산자
+            
+        Returns:
+            계산 결과
+            
+        Raises:
+            ArithmeticError: 0으로 나눌 때
+            ValueError: 지원하지 않는 연산자
+        """
+        if operator not in cls.OPERATORS:
+            raise ValueError(f"지원하지 않는 연산자: {operator}")
+        
+        operation = cls.OPERATORS[operator]
+        return operation(a, b)
+    
+    @classmethod
+    def is_valid_operator(cls, operator: str) -> bool:
+        """연산자가 유효한지 확인"""
+        return operator in cls.OPERATORS
+
+
+```
+
+```python
+"""
+계산기 프레젠터 - UI와 비즈니스 로직 사이의 중재자
+SOLID 원칙: SRP, DIP
+"""
+from typing import Optional
+from src.calculator_service import CalculatorService
+
+
+class CalculatorState:
+    """계산기 상태 관리 클래스"""
+    
+    def __init__(self):
+        self.current_value: str = "0"
+        self.previous_value: Optional[float] = None
+        self.operator: Optional[str] = None
+        self.waiting_for_operand: bool = False
+    
+    def reset(self):
+        """상태 초기화"""
+        self.current_value = "0"
+        self.previous_value = None
+        self.operator = None
+        self.waiting_for_operand = False
+
+
+class CalculatorPresenter:
+    """계산기 프레젠터 - MVP 패턴"""
+    
+    def __init__(self, view):
+        """
+        Args:
+            view: CalculatorWindow 인스턴스
+        """
+        self.view = view
+        self.state = CalculatorState()
+        self.service = CalculatorService()
+    
+    def handle_number_input(self, number: str):
+        """숫자 입력 처리"""
+        if self.state.waiting_for_operand:
+            self.state.current_value = number
+            self.state.waiting_for_operand = False
+        else:
+            if self.state.current_value == "0":
+                self.state.current_value = number
+            else:
+                self.state.current_value += number
+        
+        self.view.update_display(self.state.current_value)
+    
+    def handle_operator_input(self, operator: str):
+        """연산자 입력 처리"""
+        if self.state.operator and not self.state.waiting_for_operand:
+            # 이전 연산 실행
+            self._perform_calculation()
+        
+        self.state.previous_value = float(self.state.current_value)
+        self.state.operator = operator
+        self.state.waiting_for_operand = True
+    
+    def handle_equals(self):
+        """등호 버튼 처리"""
+        if self.state.operator and self.state.previous_value is not None:
+            self._perform_calculation()
+            self.state.operator = None
+            self.state.previous_value = None
+            self.state.waiting_for_operand = True
+    
+    def handle_clear(self):
+        """초기화"""
+        self.state.reset()
+        self.view.update_display(self.state.current_value)
+    
+    def handle_sign_change(self):
+        """부호 변경 (+/-)"""
+        if self.state.current_value != "0":
+            if self.state.current_value.startswith("-"):
+                self.state.current_value = self.state.current_value[1:]
+            else:
+                self.state.current_value = "-" + self.state.current_value
+            self.view.update_display(self.state.current_value)
+    
+    def handle_decimal_point(self):
+        """소수점 입력"""
+        if self.state.waiting_for_operand:
+            self.state.current_value = "0."
+            self.state.waiting_for_operand = False
+        elif "." not in self.state.current_value:
+            self.state.current_value += "."
+        
+        self.view.update_display(self.state.current_value)
+    
+    def _perform_calculation(self):
+        """실제 계산 수행"""
+        try:
+            result = self.service.calculate(
+                self.state.previous_value,
+                self.state.operator,
+                float(self.state.current_value)
+            )
+            
+            # 결과 포맷팅 (정수면 정수로, 소수면 소수로)
+            if result == int(result):
+                self.state.current_value = str(int(result))
+            else:
+                self.state.current_value = str(result)
+            
+            self.view.update_display(self.state.current_value)
+            
+        except ArithmeticError as e:
+            self.view.show_error("0으로 나눌 수 없습니다.")
+            self.handle_clear()
+        except Exception as e:
+            self.view.show_error(f"오류: {str(e)}")
+            self.handle_clear()
+
+
+```
+
+
+모든 테스트 실행 중.
+
+
+
+**PyQt GUI 리팩토링 구현 완료**
+
+## 구현 완료 내역
+
+### 생성된 파일
+
+1. **비즈니스 로직**
+   - `src/calculator_service.py` - 계산 서비스 (Strategy 패턴 적용)
+
+2. **프레젠터**
+   - `src/calculator_presenter.py` - MVP 패턴 프레젠터
+
+3. **GUI 컴포넌트**
+   - `src/gui/__init__.py`
+   - `src/gui/display_widget.py` - 디스플레이 위젯
+   - `src/gui/button_factory.py` - 버튼 팩토리
+   - `src/gui/calculator_window.py` - 메인 윈도우
+
+4. **진입점**
+   - `main.py` - GUI 실행 진입점
+
+5. **테스트**
+   - `tests/test_calculator_service.py` - CalculatorService 테스트
+
+### 테스트 결과
+- 총 18개 테스트 모두 통과
+- 기존 테스트 11개 + 새로운 테스트 7개
+
+### 실행 방법
+
+```bash
+# GUI 계산기 실행
+python main.py
+
+# 콘솔 버전 실행 (기존 유지)
+python src/console_app.py
+
+# 테스트 실행
+pytest tests/ -v
+```
+
+### SOLID 원칙 적용
+- SRP: 각 클래스가 단일 책임
+- OCP: Strategy 패턴으로 연산자 확장 가능
+- DIP: 인터페이스 기반 의존성
+
+GUI 계산기를 실행하려면 `python main.py`를 실행하세요.
+
+```shellscript
+# GUI 계산기 실행
+python main.py
+
+# 콘솔 버전 실행 (기존 유지)
+python src/console_app.py
+
+# 테스트 실행
+pytest tests/ -v
+```
 
