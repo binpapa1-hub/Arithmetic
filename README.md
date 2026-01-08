@@ -50,7 +50,7 @@
 
 ## TDD 프로세스 (RED-GREEN-REFACTOR)
 
-### 1. RED 단계
+### 1. RED 단계 --> 진행중 ing~~!!
 - 실패하는 테스트 케이스를 먼저 작성합니다.
 - 모든 테스트 케이스가 실패하는 것을 확인합니다.
 
@@ -58,9 +58,60 @@
 - 테스트를 통과하는 최소한의 코드를 작성합니다.
 - 모든 테스트 케이스가 성공하는 것을 확인합니다.
 
+#### 구현 우선순위
+
+| 우선순위 | 함수 | 구현 내용 | 중요도 |
+|---------|------|----------|--------|
+| 1 | `add(a, b)` | `return a + b` | 중요 |
+| 2 | `subtract(a, b)` | `return a - b` | 중요 |
+| 3 | `multiply(a, b)` | `return a * b` | 보통 |
+| 4 | `divide(a, b)` | 정수 나눗셈 + 0 예외 처리 | 중요 |
+| 5 | `divide_quotient(a, b)` | 소수점 나눗셈 + 0 예외 처리 | 보통 |
+
+#### 비기능 요구사항
+- [x] 0으로 나눌 때 `ArithmeticError` 발생
+- [x] 음수 입력값 정상 처리
+- [x] 테스트 커버리지 100% 유지
+
 ### 3. REFACTOR 단계
 - 코드의 품질을 개선합니다.
 - 테스트는 계속 통과해야 합니다.
+
+#### PyQt GUI 리팩토링 목록
+
+##### 4.1 UI 구성 요소
+
+1. **CalculatorWindow (QMainWindow)**
+   - 메인 윈도우
+   - 레이아웃 관리
+
+2. **DisplayWidget (QLabel)**
+   - 입력값 및 결과 표시
+   - 폰트 스타일링
+
+3. **ButtonGrid (QGridLayout)**
+   - 4x4 그리드 레이아웃
+   - 숫자 버튼 (0-9)
+   - 연산자 버튼 (+, -, ×, /)
+   - 기능 버튼 (+, -, ., =)
+
+##### 4.2 이벤트 처리 흐름
+
+```
+사용자 버튼 클릭
+    ↓
+CalculatorWindow.button_clicked()
+    ↓
+CalculatorPresenter.handle_input()
+    ↓
+CalculatorService.calculate()
+    ↓
+Arithmetic 메서드 호출
+    ↓
+결과 반환
+    ↓
+DisplayWidget.update()
+```
 
 ## 전제 조건
 
